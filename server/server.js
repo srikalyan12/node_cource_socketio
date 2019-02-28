@@ -4,6 +4,7 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const app = express();
+const { generateMessage } = require('./utils/message');
 
 const server = http.createServer(app);
 var io = socketIO(server);
@@ -13,14 +14,8 @@ const port = process.env.PORT || 3000;
 io.on('connection', (socket) => {
   console.log("New user conneted");
 
-  socket.emit('newMessage',{
-    from: 'Admin',
-    text: 'Welcome to chat App'
-  });
-  socket.broadcast.emit('newMessage', {
-    from: 'Admin',
-    text: 'New User has joined'
-  });
+  socket.emit('newMessage', generateMessage('Admin', 'Welcome to chat App'));
+  socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User has joined'));
   socket.on('disconnect', () => {
       console.log("user disconnected");
   });
@@ -49,9 +44,9 @@ io.on('connection', (socket) => {
   //   text: " hey Example!!",
   //   createdAt: new Date()
   // });
-  // socket.on('createMessage', (createMessage) => {
-  //   console.log(createMessage);
-  // });
+   socket.on('createMessage', (createMessage) => {
+      io.emit('newMessage', generateMessage(createMessage.from, createMessage.text));
+   });
 });
 
 //middleware
