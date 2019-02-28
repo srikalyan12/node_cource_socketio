@@ -15,6 +15,34 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
       console.log("user disconnected");
   });
+  //email APP
+  // socket.on('newEmail', (email) => {
+  //   console.log(email);
+  // });
+  // socket.emit('mailList', [{
+  //   from: "example@example.com",
+  //   text: "hey, i am IN!!",
+  //   createdAt: new Date()
+  // },
+  // {
+  //   from: "sameple@example.com",
+  //   text: "hey, i am IN!!",
+  //   createdAt: new Date()
+  // },
+  // {
+  //   from: "now@example.com",
+  //   text: "hey, i am IN!!",
+  //   createdAt: new Date()
+  // }]);
+  //chat App
+  socket.emit('newMessage', {
+    from: "example@example.com",
+    text: " hey Example!!",
+    createdAt: new Date()
+  });
+  socket.on('createMessage', (createMessage) => {
+    console.log(createMessage);
+  });
 });
 
 //middleware
