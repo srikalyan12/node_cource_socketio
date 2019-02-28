@@ -12,6 +12,15 @@ const port = process.env.PORT || 3000;
 
 io.on('connection', (socket) => {
   console.log("New user conneted");
+
+  socket.emit('newMessage',{
+    from: 'Admin',
+    text: 'Welcome to chat App'
+  });
+  socket.broadcast.emit('newMessage', {
+    from: 'Admin',
+    text: 'New User has joined'
+  });
   socket.on('disconnect', () => {
       console.log("user disconnected");
   });
@@ -35,14 +44,14 @@ io.on('connection', (socket) => {
   //   createdAt: new Date()
   // }]);
   //chat App
-  socket.emit('newMessage', {
-    from: "example@example.com",
-    text: " hey Example!!",
-    createdAt: new Date()
-  });
-  socket.on('createMessage', (createMessage) => {
-    console.log(createMessage);
-  });
+  // socket.emit('newMessage', {
+  //   from: "example@example.com",
+  //   text: " hey Example!!",
+  //   createdAt: new Date()
+  // });
+  // socket.on('createMessage', (createMessage) => {
+  //   console.log(createMessage);
+  // });
 });
 
 //middleware
