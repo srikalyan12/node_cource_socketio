@@ -36,11 +36,13 @@ jQuery('#message-form').on('submit', function(e) {
       from: 'User',
       text: jQuery('[name=mesaage]').val()
     }, function() {
+      jQuery('[name=mesaage]').val('');
     });
 });
 
 var loctionButton = jQuery('#send_location');
 loctionButton.on('click', function() {
+  loctionButton.attr('disabled', 'disabled').text('Sending Location...');
   if(!navigator.geolocation) {
     return alert('Geolocation not supported in this browser')
   }
@@ -50,7 +52,9 @@ loctionButton.on('click', function() {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       });
+      loctionButton.removeAttr('disabled').text('Send Location');;
   }, function() {
+    loctionButton.removeAttr('disabled').text('Send Location');;
     alert('unable to fetch location');
   })
 });
