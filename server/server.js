@@ -44,8 +44,9 @@ io.on('connection', (socket) => {
   //   text: " hey Example!!",
   //   createdAt: new Date()
   // });
-   socket.on('createMessage', (createMessage) => {
+   socket.on('createMessage', (createMessage, callback) => {
       io.emit('newMessage', generateMessage(createMessage.from, createMessage.text));
+      callback();
    });
 });
 
