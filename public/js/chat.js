@@ -46,7 +46,6 @@ socket.on('disconnect', function() {
 //     console.log(mailList);
 // });
 socket.on('newMessage', function(newMessage) {
-    console.log(newMessage);
     var formattedTime = moment(newMessage.createdAt).format('h:mm a');
     var template = jQuery('#message-template').html();
     var html = Mustache.render(template, {
@@ -80,7 +79,6 @@ socket.on('newLocationMessage', function(message) {
 jQuery('#message-form').on('submit', function(e) {
     e.preventDefault();
     socket.emit('createMessage', {
-      from: 'User',
       text: jQuery('[name=mesaage]').val()
     }, function() {
       jQuery('[name=mesaage]').val('');
